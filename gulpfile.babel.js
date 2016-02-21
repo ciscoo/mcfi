@@ -15,8 +15,17 @@ gulp.task('clean', () =>
 
 gulp.task('copy', () =>
 	gulp.src([
-		'src/*',
+		'src/**/*.html',
 	]).pipe(gulp.dest('dist'))
+);
+
+gulp.task('images', () =>
+  gulp.src('src/images/**/*')
+    .pipe($.cache($.imagemin({
+      progressive: true,
+      interlaced: true
+    })))
+    .pipe(gulp.dest('dist/images'))
 );
 
 gulp.task('scripts', () =>
@@ -65,7 +74,7 @@ gulp.task('styles', () => {
     .pipe(gulp.dest('dist/styles'));
 });
 
-gulp.task('serve', ['scripts', 'styles'], () => {
+gulp.task('serve', ['copy', 'scripts', 'styles', 'images'], () => {
   browserSync({
     notify: false,
     server: ['.tmp', 'dist'],
@@ -74,13 +83,14 @@ gulp.task('serve', ['scripts', 'styles'], () => {
 
   gulp.watch(['src/**/*.html'], ['copy', reload]);
   gulp.watch(['src/styles/**/*.scss'], ['styles', reload]);
-  gulp.watch(['src/scripts/**/*.js'], ['scripts']);
+  gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
+  gulp.watch(['src/images/**/*'], ['images', reload])
 })
 
 gulp.task('build', ['clean'], cb =>
   runSequence(
     'styles',
-    ['scripts', 'copy'],
+    ['scripts', 'images', 'copy'],
     cb
   )
 );
