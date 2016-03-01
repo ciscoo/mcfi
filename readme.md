@@ -8,7 +8,7 @@ Part of an ongoing [UW-Parkside Software Engineering II](http://green.uwp.edu/de
 This project uses the [Node.js](https://nodejs.org/en/) to build/compile, primarily the [Sass](http://sass-lang.com/) part. Following the appropiate installation guide to get Node.js up and running on your system.
 
 
-## Installation 
+## Installation
 After you've cloned the repo, the following will get you up and running all systems:
 
 ### Install gulp.js
@@ -18,7 +18,7 @@ After you've cloned the repo, the following will get you up and running all syst
 $ npm install --global gulp-cli
 ```
 
-### Install Dependecies
+### Install Dependencies
 
 Navigate over to the repo's directory root and run the following to install the projects dependencies:
 
