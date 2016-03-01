@@ -10,7 +10,7 @@ const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
 gulp.task('clean', () =>
-  del(['.tmp','dist'], {dot: true})
+  del(['dist'], {dot: true})
 );
 
 gulp.task('copy', () =>
@@ -34,9 +34,7 @@ gulp.task('scripts', () =>
     'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js'
 	])
     .pipe($.sourcemaps.init())
-    .pipe($.babel())
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/js'))
     .pipe($.concat('app.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     .pipe($.sourcemaps.write('.'))
@@ -64,11 +62,9 @@ gulp.task('styles', () => {
   return gulp.src([
     'src/styles/**/*.scss'
   ])
-    .pipe($.newer('.tmp/styles'))
     .pipe($.sourcemaps.init())
     .pipe($.sass(SASS_OPTIONS).on('error', $.sass.logError))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('.tmp/styles'))
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('dist/styles'));
@@ -77,7 +73,7 @@ gulp.task('styles', () => {
 gulp.task('serve', ['copy', 'scripts', 'styles', 'images'], () => {
   browserSync({
     notify: false,
-    server: ['.tmp', 'dist'],
+    server: ['dist'],
     port: 3000
   });
 
@@ -94,3 +90,5 @@ gulp.task('build', ['clean'], cb =>
     cb
   )
 );
+
+gulp.task('default', ['build']);
