@@ -1,3 +1,4 @@
+baseurl: ""
 source: src/
 destination: src/_site/
 exclude:
