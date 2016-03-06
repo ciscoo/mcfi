@@ -1,0 +1,12 @@
+source: src/
+destination: src/_site/
+exclude:
+  - .babelrc
+  - .editorconfig
+  - .gitignore
+  - gulpfile.babel.js
+  - package.json
+  - readme.md
+  - node_modules/
+  - src/images/
+  - src/scripts/

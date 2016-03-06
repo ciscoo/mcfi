@@ -2,6 +2,7 @@
 
 import gulp from 'gulp';
 import del from 'del';
+import cp from 'child_process';
 import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
 import gulpLoadPlugins from 'gulp-load-plugins';
@@ -9,14 +10,14 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
 
-gulp.task('clean', () =>
-  del(['dist'], {dot: true})
-);
+gulp.task('jekyll:build', cb => {
+  return cp.spawn('jekyll', ['build'], {stdio: 'inherit'})
+    .on('error', error => $.util.log($.util.colors.red(error.message)))
+    .on('close', cb);
+})
 
-gulp.task('copy', () =>
-	gulp.src([
-		'src/**/*.html',
-	]).pipe(gulp.dest('dist'))
+gulp.task('clean', () =>
+  del(['src/_site/**/*'], {dot: false})
 );
 
 gulp.task('images', () =>
@@ -25,7 +26,7 @@ gulp.task('images', () =>
       progressive: true,
       interlaced: true
     })))
-    .pipe(gulp.dest('dist/images'))
+    .pipe(gulp.dest('src/_site/images'))
 );
 
 gulp.task('scripts', () =>
@@ -38,7 +39,7 @@ gulp.task('scripts', () =>
     .pipe($.concat('app.min.js'))
     .pipe($.uglify({preserveComments: 'some'}))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/js'))
+    .pipe(gulp.dest('src/_site/js'))
 );
 
 gulp.task('styles', () => {
@@ -60,25 +61,25 @@ gulp.task('styles', () => {
   };
 
   return gulp.src([
-    'src/styles/**/*.scss'
+    'src/_sass/**/*.scss'
   ])
     .pipe($.sourcemaps.init())
     .pipe($.sass(SASS_OPTIONS).on('error', $.sass.logError))
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('dist/styles'));
+    .pipe(gulp.dest('src/_site/css'));
 });
 
-gulp.task('serve', ['copy', 'scripts', 'styles', 'images'], () => {
+gulp.task('serve', ['jekyll:build', 'scripts', 'styles', 'images'], () => {
   browserSync({
     notify: false,
-    server: ['dist'],
+    server: ['src/_site'],
     port: 3000
   });
 
-  gulp.watch(['src/**/*.html'], ['copy', reload]);
-  gulp.watch(['src/styles/**/*.scss'], ['styles', reload]);
+  gulp.watch(['src/**/*.html'], ['jekyll:build', reload]);
+  gulp.watch(['src/_sass/**/*.scss'], ['styles', reload]);
   gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
   gulp.watch(['src/images/**/*'], ['images', reload])
 })
@@ -86,7 +87,7 @@ gulp.task('serve', ['copy', 'scripts', 'styles', 'images'], () => {
 gulp.task('build', ['clean'], cb =>
   runSequence(
     'styles',
-    ['scripts', 'images', 'copy'],
+    ['scripts', 'images', 'jekyll:build'],
     cb
   )
 );
