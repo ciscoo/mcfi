@@ -1,6 +1,12 @@
 baseurl: ""
+url: "http://localhost:3000/"
 source: src/
 destination: src/_site/
+keep_files:
+  - src/_site/.gitignore
+  - src/_site/css
+  - src/_site/images
+  - src/_site/js
 exclude:
   - .babelrc
   - .editorconfig

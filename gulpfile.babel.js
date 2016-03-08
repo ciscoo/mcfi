@@ -9,15 +9,18 @@ import gulpLoadPlugins from 'gulp-load-plugins';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
+const bs = browserSync.create();
 
-gulp.task('jekyll:build', cb => {
+gulp.task('jekyll:build', () => {
   return cp.spawn('jekyll', ['build'], {stdio: 'inherit'})
     .on('error', error => $.util.log($.util.colors.red(error.message)))
-    .on('close', cb);
+    .on('close', reload);
 })
 
-gulp.task('clean', () =>
-  del(['src/_site/**/*'], {dot: false})
+gulp.task('jekyll', ['jekyll:build'], reload);
+
+gulp.task('clean', (cb) =>
+  del(['src/_site/**/*'], {dot: false}, cb)
 );
 
 gulp.task('images', () =>
@@ -29,16 +32,11 @@ gulp.task('images', () =>
     .pipe(gulp.dest('src/_site/images'))
 );
 
-gulp.task('scripts', () =>
+gulp.task('scripts:vendor', () =>
 	gulp.src([
-    'node_modules/jquery/dist/jquery.js',
-    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.js'
+    'node_modules/jquery/dist/jquery.min.js',
+    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js'
 	])
-    .pipe($.sourcemaps.init())
-    .pipe($.sourcemaps.write())
-    .pipe($.concat('app.min.js'))
-    .pipe($.uglify({preserveComments: 'some'}))
-    .pipe($.sourcemaps.write('.'))
     .pipe(gulp.dest('src/_site/js'))
 );
 
@@ -68,26 +66,29 @@ gulp.task('styles', () => {
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
     .pipe($.if('*.css', $.cssnano()))
     .pipe($.sourcemaps.write('.'))
-    .pipe(gulp.dest('src/_site/css'));
+    .pipe(gulp.dest('src/_site/css'))
+    .pipe(browserSync.stream());
 });
 
-gulp.task('serve', ['jekyll:build', 'scripts', 'styles', 'images'], () => {
-  browserSync({
-    notify: false,
-    server: ['src/_site'],
+gulp.task('serve', ['clean', 'scripts:vendor', 'styles', 'images', 'jekyll:build'], () => {
+  bs.init({
+    notify: true,
+    server: {
+      baseDir: 'src/_site'
+    },
     port: 3000
   });
 
-  gulp.watch(['src/**/*.html'], ['jekyll:build', reload]);
-  gulp.watch(['src/_sass/**/*.scss'], ['styles', reload]);
-  gulp.watch(['src/scripts/**/*.js'], ['scripts', reload]);
+  gulp.watch(['src/**/*.html'], ['jekyll']);
+  gulp.watch(['src/_sass/**/*.scss'], ['styles']);
+  gulp.watch(['src/scripts/**/*.js'], ['scripts:vendor', reload]);
   gulp.watch(['src/images/**/*'], ['images', reload])
 })
 
 gulp.task('build', ['clean'], cb =>
   runSequence(
     'styles',
-    ['scripts', 'images', 'jekyll:build'],
+    ['scripts:vendor', 'images', 'jekyll:build'],
     cb
   )
 );
