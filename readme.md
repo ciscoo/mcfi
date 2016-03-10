@@ -5,7 +5,12 @@ Part of an ongoing [UW-Parkside Software Engineering II](http://green.uwp.edu/de
 
 ## Prerequisites
 
-This project uses the [Node.js](https://nodejs.org/en/) to build/compile, primarily the [Sass](http://sass-lang.com/) part. Following the appropiate installation guide to get Node.js up and running on your system.
+This project uses:
+
+* [Node.js](https://nodejs.org/en/)
+* [Jekyll](https://jekyllrb.com/)
+
+Following the appropriate installation guide to get both up and running on your system.
 
 
 ## Installation
@@ -34,4 +39,51 @@ Run the following in your terminal:
 $ gulp serve
 ```
 
-This will build the project and launch your default browser showing the built project. Any change you make in the styles, javascript, or html, will be reflected instantly in your browser. How? [Browsersync](https://www.browsersync.io/) magic.
+This will build the project and launch your default browser showing the built project. Any change you make in the styles, javascript, or html, will be reflected instantly in your browser.
+
+
+## Contributing
+
+
+1. [Fork](https://help.github.com/fork-a-repo/) the project, clone your fork,
+   and configure the remotes:
+
+   ```bash
+   # Clone your fork of the repo into the current directory
+   git clone https://github.com/<your-username>/mcfi.git
+   # Navigate to the newly cloned directory
+   cd mcfi
+   # Assign the original repo to a remote called "upstream"
+   git remote add upstream https://github.com/ciscoo/mcfi.git
+   ```
+
+2. If you cloned a while ago, get the latest changes from upstream:
+
+   ```bash
+   git checkout master
+   git pull upstream master
+   ```
+
+3. Create a new topic branch (off the main project development branch) to
+   contain your feature, change, or fix:
+
+   ```bash
+   git checkout -b <topic-branch-name>
+   ```
+
+4. Commit your changes in logical chunks.
+
+5. Locally merge (or rebase) the upstream development branch into your topic branch:
+
+   ```bash
+   git pull [--rebase] upstream master
+   ```
+
+6. Push your topic branch up to your fork:
+
+   ```bash
+   git push origin <topic-branch-name>
+   ```
+
+7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/)
+    with a clear title and description against the `master` branch.
