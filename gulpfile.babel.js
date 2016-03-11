@@ -6,9 +6,11 @@ import cp from 'child_process';
 import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
 import gulpLoadPlugins from 'gulp-load-plugins';
+import childProcess from 'child_process';
 
 const $ = gulpLoadPlugins();
 const reload = browserSync.reload;
+const exec = childProcess.exec;
 const bs = browserSync.create();
 
 gulp.task('jekyll:build', () => {
@@ -17,10 +19,20 @@ gulp.task('jekyll:build', () => {
     .on('close', reload);
 })
 
+gulp.task('jekyll:dist', () => {
+  return cp.spawn('jekyll', [
+    'build',
+    '--config',
+    '_config.yml',
+    ',_config-dist.yml'], {stdio: 'inherit'})
+    .on('error', error => $.util.log($.util.colors.red(error.message)))
+    .on('close', reload);
+})
+
 gulp.task('jekyll', ['jekyll:build'], reload);
 
 gulp.task('clean', (cb) =>
-  del(['src/_site/**/*'], {dot: false}, cb)
+  del(['src/_site/**/*', 'dist/**/*'], {dot: false}, cb)
 );
 
 gulp.task('images', () =>
@@ -92,5 +104,13 @@ gulp.task('build', ['clean'], cb =>
     cb
   )
 );
+
+gulp.task('dist', ['build'], () => {
+  gulp.src(['src/_site/**/*.html',], {
+    base: './src/_site/',
+    dot: false
+  })
+    .pipe(gulp.dest('dist'))
+});
 
 gulp.task('default', ['build']);

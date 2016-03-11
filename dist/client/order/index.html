@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCFI</title>
+
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">MCFI</a>
+    </div>
+    <div id="navbar" class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="">Home</a></li>
+        <li><a href="">Create Order</a></li>
+        <li><a href="">View Orders</a></li>
+        <li><a href="">Invoices</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="container">
+      <form>
+  <div class="form-order">
+    <div class="table-responsive">
+      <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Breakfast Meals</th>
+          <th>Breakfast Fruit</th>
+          <th>Lunch</th>
+          <th>Bag Lunches</th>
+          <th>Snacks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Monday <span class="date">1/1/1970</span></th>
+          <th><input type="number" class="form-control" name="bm-monday" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="bf-monday" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="l-monday" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="bl-monday"placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="s-monday" placeholder="0" required></th>
+        </tr>
+        <tr>
+          <th>Tuesday <span class="date">1/1/1970</span></th>
+          <th><input type="number" class="form-control" name="bm-monday" placeholder="0" required ></th>
+          <th><input type="number" class="form-control" name="bf-tuesday" placeholder="0" required ></th>
+          <th><input type="number" class="form-control" name="l-tuesday" placeholder="0" required ></th>
+          <th><input type="number" class="form-control" name="bl-tuesday" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="s-tuesday" placeholder="0" required ></th>
+        </tr>
+        <tr>
+          <th>Wednesday <span class="date">1/1/1970</span></th>
+          <th><input type="number" class="form-control" name="bm-weds" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="bf-weds" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="l-weds" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="bl-weds" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="s-weds" placeholder="0" required></th>
+        </tr>
+        <tr>
+          <th>Thursday <span class="date">1/1/1970</span></th>
+          <th><input type="number" class="form-control" name="bm-thr" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="bf-thr" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="l-thr" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="bl-thr" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="s-thr" placeholder="0" required></th>
+        </tr>
+        <tr>
+          <th>Friday <span class="date">1/1/1970</span></th>
+          <th><input type="number" class="form-control" name="bm-fri" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="bf-fri" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="l-fri" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="bl-fri" placeholder="0" required></th>
+          <th><input type="number" class="form-control" name="s-fri" placeholder="0" required></th>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="form-order form-horizontal">
+    <div class="row">
+      <div class="col-sm-5">
+        <div class="form-group">
+          <label>Allergy Alerts</label>
+          <textarea class="form-control" rows="3" required></textarea>
+        </div>
+      </div>
+      <div class="col-sm-5 col-sm-offset-2">
+        <div class="form-group">
+          <label>Requests/Comments</label>
+          <textarea class="form-control" rows="3"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-4">
+        <button type="button" class="btn btn-lg btn-primary btn-block">Submit</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12">
+        <hr>
+        <h4 class="text-center">Please submit each Wednesday by Noon for the following week.</h4>
+        <h4 class="text-center">Call 414-897-3268 with any questions.</h4>
+      </div>
+    </div>
+  </div>
+</form>
+
+    </div>
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+  </body>
+</html>
