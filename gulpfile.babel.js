@@ -47,7 +47,9 @@ gulp.task('images', () =>
 gulp.task('scripts:vendor', () =>
 	gulp.src([
     'node_modules/jquery/dist/jquery.min.js',
-    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js'
+    'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+    'src/js/vendor/nutritionLabel-min.js',
+    'src/js/app.js'
 	])
     .pipe(gulp.dest('src/_site/js'))
 );
