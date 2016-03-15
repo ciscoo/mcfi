@@ -82,7 +82,7 @@ gulp.task('styles', () => {
     .pipe(browserSync.stream());
 });
 
-gulp.task('serve', ['clean', 'scripts:vendor', 'styles', 'images', 'jekyll:build'], () => {
+gulp.task('serve', ['build'], () => {
   bs.init({
     notify: true,
     server: {
@@ -97,10 +97,11 @@ gulp.task('serve', ['clean', 'scripts:vendor', 'styles', 'images', 'jekyll:build
   gulp.watch(['src/images/**/*'], ['images', reload])
 })
 
-gulp.task('build', ['clean'], cb =>
+gulp.task('build', cb =>
   runSequence(
-    'styles',
-    ['scripts:vendor', 'images', 'jekyll:build'],
+    'clean',
+    ['styles', 'scripts:vendor', 'images'],
+    'jekyll:build',
     cb
   )
 );
