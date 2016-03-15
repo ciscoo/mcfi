@@ -32,7 +32,7 @@ gulp.task('jekyll:dist', () => {
 gulp.task('jekyll', ['jekyll:build'], reload);
 
 gulp.task('clean', (cb) =>
-  del(['src/_site/**/*', 'dist/**/*'], {dot: false}, cb)
+  del(['src/_site/**/*'], {dot: false}, cb)
 );
 
 gulp.task('images', () =>
